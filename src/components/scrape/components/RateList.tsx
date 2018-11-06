@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Table, Input, Button, Icon } from 'antd';
-import { IRateData, IRateRecord } from '../scrape';
 
 const columns = [
   {

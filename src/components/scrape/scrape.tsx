@@ -2,8 +2,9 @@ import * as React from 'react';
 import { Button } from 'antd';
 import { RateList, GameList } from './components';
 import { entityAPI } from './api';
+import { ExecFileOptionsWithStringEncoding } from 'child_process';
 
-export interface IServerRateData {
+/* export interface IServerRateData {
   success?: any;
   data: IRateData;
 }
@@ -11,24 +12,25 @@ export interface IServerRateData {
 export interface IServerGameData {
   success?: any;
   data: IGameData;
-}
+} */
 
 export interface IRateRecord {
+  key: number,
   name: string;
-  'buy-rate': string;
-  'sell-rate': string;
+  buy: number;
+  sell: number;
 }
 
 export interface IRateData {
-   lines: IRateRecord[];
-}
-
-export interface ITorrent {
-  name: string;
+   lines: IRateRecord[]
 }
 
 export interface IGameList {
-  torrent: ITorrent[];
+  date: string,
+  name: string,
+  size: string,
+  piers: string
+
 }
 
 export interface IGameData {

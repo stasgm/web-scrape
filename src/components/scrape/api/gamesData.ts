@@ -1,6 +1,6 @@
 import { IGameData } from './../scrape';
 
-const baseURL = 'https://wrapapi.com/use/damned_god/rutor/games/0.0.2';
+const baseURL = 'https://wrapapi.com/use/damned_god/rutor/games/0.0.3';
 const wrapAPIKey = 'OM3kz0KsWSPDTfjkp0hwH4XlInvwV7RJ';
 
 export const fetchData = async (): Promise<IGameData> => {
@@ -23,9 +23,9 @@ export const fetchData = async (): Promise<IGameData> => {
     throw new Error(res.messages);
   }
 
-  return mapToState(res);
+  return mapDataToState(res);
 };
 
-const mapToState = (res: any) => {
+const mapDataToState = (res: any) => {
   return res.data;
 };

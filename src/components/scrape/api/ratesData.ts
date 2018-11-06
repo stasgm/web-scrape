@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { IRateData } from './../scrape';
 
 const baseURL = 'https://wrapapi.com/use/damned_god/select-by/best-rates/0.0.7';
 const wrapAPIKey = 'OM3kz0KsWSPDTfjkp0hwH4XlInvwV7RJ';
 
-const response = await fetch(baseURL, {
+export const fetchData = async (): Promise<IRateData> => {
+  const response = await fetch(baseURL, {
     method: 'post',
     headers: {
       Accept: 'application/json',
@@ -22,9 +22,9 @@ const response = await fetch(baseURL, {
     throw new Error(res.messages);
   }
 
-  return mapToState(res);
+  return mapDataToState(res);
 };
 
-const mapToState = (res: any) => {
+const mapDataToState = (res: any) => {
   return res.data;
 };
