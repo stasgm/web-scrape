@@ -15,22 +15,21 @@ export interface IServerGameData {
 } */
 
 export interface IRateRecord {
-  key: number,
+  key: number;
   name: string;
   buy: number;
   sell: number;
 }
 
 export interface IRateData {
-   lines: IRateRecord[]
+  lines: IRateRecord[];
 }
 
 export interface IGameList {
-  date: string,
-  name: string,
-  size: string,
-  piers: string
-
+  date: string;
+  name: string;
+  size: string;
+  piers: string;
 }
 
 export interface IGameData {
@@ -48,7 +47,7 @@ interface IState {
 export class Scrape extends React.Component<{}, IState> {
   public initialState = {
     rateList: {
-        lines: []
+      lines: []
     },
     gameList: {
       list: []

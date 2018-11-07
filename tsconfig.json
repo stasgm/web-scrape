@@ -9,15 +9,17 @@
     "lib": ["es2017", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "outDir": "./build",
+    "outDir": "./dist",
     "paths": {
       "@src/*": ["src/*"],
       "@components/*": ["src/components/*"],
+      "@configs": ["configs/*"]
     },
-    "rootDir": "src",
+    "rootDir": ".",
     "sourceMap": true,
     "strict": true,
     "target": "es5",
@@ -28,7 +30,6 @@
   },
   "exclude": [
     "build",
-    "configs",
     "dist",
     "node_modules",
     "scripts"

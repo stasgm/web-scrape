@@ -1,10 +1,11 @@
-import webpack from 'webpack';
+import { Configuration, NoEmitOnErrorsPlugin, RuleSetLoader } from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import config from '../config.json';
+import pkg from '../../package.json';
 import { getRootRelativePath } from './utils';
 
-function getWebpackConfigBase(outputFilename, outputChunkFilename) {
+function getWebpackConfigBase(outputFilename: string, outputChunkFilename: string): Configuration {
   return {
     entry: {
       app: [
@@ -14,7 +15,7 @@ function getWebpackConfigBase(outputFilename, outputChunkFilename) {
     },
     output: {
       path: getRootRelativePath(config.webpack.buildPath),
-      publicPath: './',
+      publicPath: '',
       filename: outputFilename,
       chunkFilename: outputChunkFilename
     },
@@ -27,14 +28,15 @@ function getWebpackConfigBase(outputFilename, outputChunkFilename) {
         title: 'WEB SCRAPE',
         // template params
         appMountNodeId: config.webpack.appMountNodeId,
-        description: 'web scrape',
+        description: pkg.description,
         mobile: true
       }),
-      new webpack.NoEmitOnErrorsPlugin()
+      new NoEmitOnErrorsPlugin()
     ],
     resolve: {
       alias: {
         '@src': getRootRelativePath('src'),
+        '@components': getRootRelativePath('src/components'),
         configFile: getRootRelativePath('configs/config.json')
       },
       extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']
@@ -42,14 +44,14 @@ function getWebpackConfigBase(outputFilename, outputChunkFilename) {
   };
 }
 
-const cssLoader = {
+const cssLoader: RuleSetLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true
   }
 };
 
-let cssModulesLoader = {
+const cssModulesLoader: RuleSetLoader = {
   loader: 'css-loader',
   options: {
     modules: true,
@@ -58,7 +60,5 @@ let cssModulesLoader = {
     localIdentName: '[name]__[local]__[hash:base64:5]'
   }
 };
-
-cssModulesLoader = cssLoader;
 
 export { getWebpackConfigBase, cssLoader, cssModulesLoader };
