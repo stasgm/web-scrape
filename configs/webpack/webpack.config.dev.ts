@@ -44,12 +44,12 @@ const config: Configuration = merge(getWebpackConfigBase(OUTPUT_FILENAME, OUTPUT
         include: STYLES_PATH,
         use: ['style-loader', cssLoader]
       },
-      // css modules
+      // sass/css
       {
-        test: /\.css$/,
+        test: /\.(scss|css)$/,
         include: getRootRelativePath('src'),
         exclude: STYLES_PATH,
-        use: ['style-loader', cssModulesLoader]
+        use: ['style-loader', cssModulesLoader, 'sass-loader', 'postcss-loader']
       }
     ]
   },

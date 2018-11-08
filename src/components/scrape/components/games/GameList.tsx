@@ -24,12 +24,5 @@ const columns = [
   }
 ];
 export const GameList: React.SFC<any> = props => {
-  return <Table columns={columns} dataSource={props.list} />;
-  /* return (
-    <ul>
-      {props.list.map((i: IGameList, idx) => (
-        <li key={idx}>{i.torrent[0].name}</li>
-      ))}
-    </ul>
-  ); */
+  return <Table columns={columns} dataSource={props.list} size="small" />;
 };

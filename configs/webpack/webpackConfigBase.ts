@@ -35,8 +35,13 @@ function getWebpackConfigBase(outputFilename: string, outputChunkFilename: strin
     ],
     resolve: {
       alias: {
-        '@src': getRootRelativePath('src'),
+        app: getRootRelativePath('src/'),
+        '@common': getRootRelativePath('src/common'),
         '@components': getRootRelativePath('src/components'),
+        '@containers':  getRootRelativePath('src/containers'),
+        '@actions':  getRootRelativePath('src/actions'),
+        '@reducers':  getRootRelativePath('src/reducers'),
+        '@src': getRootRelativePath('src'),
         configFile: getRootRelativePath('configs/config.json')
       },
       extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']

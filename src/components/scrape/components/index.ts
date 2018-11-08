@@ -1,2 +1,2 @@
-export { GameList } from './GameList';
-export * from './RateList';
+export * from './games/GameList';
+export { RateList } from './rates/RateList';

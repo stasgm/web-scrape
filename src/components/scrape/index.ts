@@ -1,1 +1,1 @@
-export * from './scrape';
+export * from './components';

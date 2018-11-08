@@ -2,17 +2,6 @@ import * as React from 'react';
 import { Button } from 'antd';
 import { RateList, GameList } from './components';
 import { entityAPI } from './api';
-import { ExecFileOptionsWithStringEncoding } from 'child_process';
-
-/* export interface IServerRateData {
-  success?: any;
-  data: IRateData;
-}
-
-export interface IServerGameData {
-  success?: any;
-  data: IGameData;
-} */
 
 export interface IRateRecord {
   key: number;
@@ -66,7 +55,7 @@ export class Scrape extends React.Component<{}, IState> {
     return (
       <>
         <div>Scrape test</div>
-        <div>{this.state.statusMessage}</div>
+        {/*        <div>{this.state.statusMessage}</div>
         <Button onClick={this.handleLoadRatesButton} loading={this.state.loadingRateStatus}>
           Load rates
         </Button>
@@ -74,7 +63,7 @@ export class Scrape extends React.Component<{}, IState> {
           Load games
         </Button>
         <RateList list={this.state.rateList.lines} />
-        <GameList list={this.state.gameList.list} />
+        <GameList list={this.state.gameList.list} /> */}
       </>
     );
   }
