@@ -1,55 +1,37 @@
 import * as React from 'react';
-import { Button } from 'antd';
-import { RateList, GameList } from './components';
-import { entityAPI } from './api';
+// import { entityAPI } from './api';
 
-export interface IRateRecord {
-  key: number;
-  name: string;
-  buy: number;
-  sell: number;
-}
+// export interface IRateRecord {
+//   key: number;
+//   name: string;
+//   buy: number;
+//   sell: number;
+// }
 
-export interface IRateData {
-  lines: IRateRecord[];
-}
+// export interface IRateData {
+//   lines: IRateRecord[];
+// }
 
-export interface IGameList {
-  date: string;
-  name: string;
-  size: string;
-  piers: string;
-}
+// export interface IGameList {
+//   date: string;
+//   name: string;
+//   size: string;
+//   piers: string;
+// }
 
-export interface IGameData {
-  list: IGameList[];
-}
+// export interface IGameData {
+//   list: IGameList[];
+// }
 
-interface IState {
-  rateList: IRateData;
-  gameList: IGameData;
-  loadingRateStatus: boolean;
-  loadingGameStatus: boolean;
-  statusMessage: string;
-}
+// interface IState {
+//   rateList: IRateData;
+//   gameList: IGameData;
+//   loadingRateStatus: boolean;
+//   loadingGameStatus: boolean;
+//   statusMessage: string;
+// }
 
-export class Scrape extends React.Component<{}, IState> {
-  public initialState = {
-    rateList: {
-      lines: []
-    },
-    gameList: {
-      list: []
-    }
-  };
-
-  public state: Readonly<IState> = {
-    rateList: this.initialState.rateList,
-    gameList: this.initialState.gameList,
-    loadingRateStatus: false,
-    loadingGameStatus: false,
-    statusMessage: ''
-  };
+export class Scrape extends React.Component<{}, {}> {
 
   public render() {
     return (
@@ -68,35 +50,35 @@ export class Scrape extends React.Component<{}, IState> {
     );
   }
 
-  private getRatesData = () => {
-    entityAPI
-      .fetchRateData()
-      .then(data => {
-        this.setState({ rateList: data, loadingRateStatus: false });
-      })
-      .catch(e => this.setState({ statusMessage: `Ошибка: ${e.message}`, loadingRateStatus: false }));
-  };
+  // private getRatesData = () => {
+  //   entityAPI
+  //     .fetchRateData()
+  //     .then(data => {
+  //       this.setState({ rateList: data, loadingRateStatus: false });
+  //     })
+  //     .catch(e => this.setState({ statusMessage: `Ошибка: ${e.message}`, loadingRateStatus: false }));
+  // };
 
-  private getGamesData = () => {
-    entityAPI
-      .fetchGameData()
-      .then(data => {
-        this.setState({ gameList: data, loadingGameStatus: false });
-      })
-      .catch(e => this.setState({ statusMessage: `Ошибка: ${e.message}`, loadingGameStatus: false }));
-  };
+  // private getGamesData = () => {
+  //   entityAPI
+  //     .fetchGameData()
+  //     .then(data => {
+  //       this.setState({ gameList: data, loadingGameStatus: false });
+  //     })
+  //     .catch(e => this.setState({ statusMessage: `Ошибка: ${e.message}`, loadingGameStatus: false }));
+  // };
 
-  private handleLoadGamesButton = () => {
-    this.setState(
-      { gameList: this.initialState.gameList, loadingGameStatus: true, statusMessage: '' },
-      this.getGamesData
-    );
-  };
+  // private handleLoadGamesButton = () => {
+  //   this.setState(
+  //     { gameList: this.initialState.gameList, loadingGameStatus: true, statusMessage: '' },
+  //     this.getGamesData
+  //   );
+  // };
 
-  private handleLoadRatesButton = () => {
-    this.setState(
-      { rateList: this.initialState.rateList, loadingRateStatus: true, statusMessage: '' },
-      this.getRatesData
-    );
-  };
+  // private handleLoadRatesButton = () => {
+  //   this.setState(
+  //     { rateList: this.initialState.rateList, loadingRateStatus: true, statusMessage: '' },
+  //     this.getRatesData
+  //   );
+  // };
 }

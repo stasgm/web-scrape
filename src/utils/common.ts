@@ -14,6 +14,7 @@ export function getObjectValue(theObject: any, path: string, separator = '.') {
                 );
 
     } catch (err) {
-        return undefined;
+        return ;
     }
 }
+

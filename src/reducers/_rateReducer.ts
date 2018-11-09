@@ -19,10 +19,10 @@ export const actionTypeEnumToString = (action: any): any =>
       }
     : action;
 
-export function rateReducer(
+export const rateReducer = (
   state = createEmptyRateRecord(),
   action: IAction<string | null> = { type: '', payload: null }
-): IRateEntity {
+): IRateEntity => {
   switch (action.type) {
     case actionTypeEnumToString(actions.ADD_RATE):
       console.log('add');

@@ -6,5 +6,5 @@ export interface IRateEntity {
 }
 
 export interface IRatesEntity {
-  rates: IRateEntity[];
+  list: IRateEntity[];
 }
