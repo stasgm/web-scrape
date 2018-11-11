@@ -14,7 +14,7 @@ const EXTRACT_CSS_FILENAME = 'styles/[name].[chunkhash].css';
 const STYLES_PATH = getRootRelativePath('src/styles');
 
 const config: Configuration = merge(getWebpackConfigBase(OUTPUT_FILENAME, OUTPUT_CHUNK_FILENAME), {
-  devtool: 'source-map',
+  devtool: false,
   mode: 'production',
   module: {
     rules: [
@@ -34,6 +34,15 @@ const config: Configuration = merge(getWebpackConfigBase(OUTPUT_FILENAME, OUTPUT
           }
         ]
       },
+      // sass/css
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader, // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          'sass-loader' // compiles Sass to CSS, using Node Sass by default
+        ]
+      },
       {
         test: /\.css$/,
         include: STYLES_PATH,
@@ -48,7 +57,7 @@ const config: Configuration = merge(getWebpackConfigBase(OUTPUT_FILENAME, OUTPUT
     ]
   },
   output: {
-    publicPath: '/dist/' // TODO test
+    publicPath: './' // TODO test
   },
   optimization: {
     minimizer: [
@@ -59,26 +68,13 @@ const config: Configuration = merge(getWebpackConfigBase(OUTPUT_FILENAME, OUTPUT
       })
       // new OptimizeCSSAssetsPlugin({})
     ]
-    // splitChunks: {
-    //   cacheGroups: {
-    //     vendor: {
-    //       chunks: 'initial',
-    //       name: 'vendor',
-    //       test: 'vendor',
-    //       enforce: true
-    //     }
-    //   }
-    // }
   },
-  // performance: {
-  //   hints: false
-  // },
   plugins: [
     new CleanWebpackPlugin(['dist'], {
       root: getRootRelativePath('')
     }),
     new MiniCssExtractPlugin({ filename: EXTRACT_CSS_FILENAME }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new EnvironmentPlugin({
       NODE_ENV: process.env.NODE_ENV || 'production'
     })
