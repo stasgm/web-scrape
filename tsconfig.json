@@ -1,41 +1,26 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "jsx": "react",
-    "lib": ["es2017", "dom"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "paths": {
-      "@src/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@configs": ["configs/*"],
-      "@common/*": ["src/common/*"],
-      "@containers/*": ["src/containers/*"],
-      "@actions/*": ["src/actions/*"],
-      "@reducers/*": ["src/reducers/*"]
-    },
-    "rootDir": ".",
     "sourceMap": true,
-    "strict": true,
     "target": "es5",
-    "typeRoots": [
-      "node_modules/@types",
-      "./typings"
-    ],
+    "jsx": "react",
+    "module": "es6",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "declaration": false,
+    "removeComments": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "outDir": "build",
+    "lib": ["es6", "es7", "dom"],
+    "baseUrl": "src",
+    "paths": {
+      "app/*": ["./app/*"],
+      "src/*": ["./*"],
+      "@redux/*": ["./app/redux/*"],
+      "@models": ["./app/models"],
+      "@components/*": ["./app/components/*"]
+    }
   },
-  "exclude": [
-    "build",
-    "dist",
-    "node_modules",
-    "scripts"
-  ]
+  "exclude": ["build", "node_modules"]
 }
