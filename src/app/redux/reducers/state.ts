@@ -5,4 +5,4 @@ export interface IRootState {
   router?: any;
 }
 
- export type TodoState = ITodoModel[];
+export type TodoState = ITodoModel[];
