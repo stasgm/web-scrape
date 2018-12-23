@@ -1,32 +1,77 @@
 import * as React from 'react';
-import * as style from './style.css';
-import { TodoActions } from '@redux/actions/todos';
-// import { TodoItem } from '../TodoItem';
-import { IRateModel } from '@models';
+// import * as style from './style.css';
+import { RateState, ICurrencyRates /* ICurrency, IRate */ } from '@models';
+import { Table } from 'antd';
 
-export interface IProps {
-  todos: ITodoModel[];
-  actions: TodoActions;
+interface IProps {
+  data: RateState;
 }
 
-export class Rates extends React.Component<IProps> {
-  public render() {
-    const { todos, actions } = this.props;
-    return (
-      <section className={style.main}>
-        {this.renderToggleAll()}
-        <ul className={style.normal}>
-          {todos.map((todo) => (
-            <TodoItem
-              key={todo.id}
-              todo={todo}
-              completeTodo={actions.completeTodo}
-              deleteTodo={actions.deleteTodo}
-              editTodo={actions.editTodo}
-            />
-          ))}
-        </ul>
-      </section>
-    );
+/* const RateLine = () => {
+  return;
+};
+ */
+/* const getLine = (arr: any) =>
+  Object.keys(arr).map((itm) => `${itm} - ${arr[itm].map((i: any) => i)}`); */
+
+// const expandedRowRender = () => [];
+
+/* const expandedRowRender = () => {
+  const columns = [
+    { title: 'Наименование', dataIndex: 'curName', key: 'curName' },
+    { title: 'НБРБ', dataIndex: 'rate', key: 'rate' },
+    { title: 'Покупка', dataIndex: 'ask', key: 'ask' },
+    { title: 'Продажа', dataIndex: 'bid', key: 'bid' }
+  ];
+
+  const data: any = [];
+
+  for (let i = 0; i < 3; ++i) {
+    data.push({
+      key: i,
+      date: '2014-12-24 23:12:00',
+      name: 'This is production name',
+      upgradeNum: 'Upgraded: 56'
+    });
   }
+  return <Table columns={columns} dataSource={data} pagination={false} />;
+}; */
+interface ITableTitle {
+  date: string;
+  USD: number;
+  EUR: number;
+  RUB: number;
 }
+
+const getDate = (date: ICurrencyRates[]): ITableTitle[] => {
+  return date.map((i: ICurrencyRates) => {
+    return {
+      date: i.date.toLocaleDateString(),
+      USD: i.currencies.USD ? i.currencies.USD.rate : 0,
+      EUR: i.currencies.EUR ? i.currencies.EUR.rate : 0,
+      RUB: i.currencies.RUB ? i.currencies.RUB.rate : 0
+    };
+  });
+};
+
+export const Rates = (props: IProps) => {
+  const tableData = getDate(props.data.rates);
+
+  const columns = [
+    { title: 'Дата', dataIndex: 'date', key: 'date' },
+    { title: 'USD', dataIndex: 'USD', key: 'USD' },
+    { title: 'EUR', dataIndex: 'EUR', key: 'EUR' },
+    { title: 'RUB', dataIndex: 'RUB', key: 'RUB' }
+  ];
+
+  return (
+    <Table
+      className="components-table-demo-nested"
+      size="small"
+      bordered={true}
+      columns={columns}
+      // expandedRowRender={expandedRowRender}
+      dataSource={tableData}
+    />
+  );
+};

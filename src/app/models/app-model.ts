@@ -1,0 +1,3 @@
+interface IApp {
+  isLoading: boolean;
+}

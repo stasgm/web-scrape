@@ -6,6 +6,7 @@ import { Router } from 'react-router';
 
 import { configureStore } from '@redux/store';
 import { App } from 'app';
+import './app/styles/index.scss';
 
 // prepare store
 const history = createBrowserHistory();

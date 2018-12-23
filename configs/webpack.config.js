@@ -29,7 +29,7 @@ module.exports = {
     // Fix webpack's default behavior to not load packages with jsnext:main module
     // (jsnext:main directs not usually distributable es6 format, but es6 sources)
     mainFields: ['module', 'browser', 'main'],
-    alias: aliasPath,
+    alias: aliasPath
   },
   module: {
     rules: [
@@ -44,6 +44,15 @@ module.exports = {
           'ts-loader'
         ].filter(Boolean)
       },
+      //scss
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader', // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          'sass-loader' // compiles Sass to CSS, using Node Sass by default
+        ]
+      },
       // css
       {
         test: /\.css$/,
@@ -57,8 +66,8 @@ module.exports = {
               importLoaders: 1,
               localIdentName: isProduction ? '[hash:base64:5]' : '[local]__[hash:base64:5]'
             }
-          },
-          {
+          }
+          /*  {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
@@ -66,8 +75,8 @@ module.exports = {
                 require('postcss-import')({ addDependencyTo: webpack }),
                 require('postcss-url')(),
                 require('postcss-preset-env')({
-                  /* use stage 2 features (defaults) */
-                  stage: 2,
+                  // use stage 2 features (defaults)
+                  stage: 2
                 }),
                 require('postcss-reporter')(),
                 require('postcss-browser-reporter')({
@@ -75,7 +84,7 @@ module.exports = {
                 })
               ]
             }
-          }
+          } */
         ]
       },
       // static assets

@@ -1,1 +1,1 @@
-export * from './todos';
+export { TRatesActions, ratesActions } from './rates';

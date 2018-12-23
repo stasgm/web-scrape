@@ -1,27 +1,26 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { TodoActions, ActionTypes } from '@redux/actions';
-import { IRootState, TodoState } from '@redux/reducers';
-import { IRateModel, testData } from '@models';
-// import { Header, TodoList, Footer } from 'app/components';
 
-import * as style from './style.css';
+import { TRatesActions } from '@redux/actions';
+import { RateState, testData } from '@models';
+import { Header, Rates } from 'app/components';
+
+// import * as style from './style.css';
+import './style.scss';
 
 export interface IProps extends RouteComponentProps<void> {
-  todos: TodoState;
-  actions: TodoActions;
-  // filter: Filter;
+  rates: RateState;
+  actions: TRatesActions;
 }
 
-const filteredRates = testData;
+const filteredRates: RateState = testData;
 
 export class App extends React.Component<IProps> {
   public render() {
     return (
-      <div className={style.normal}>
+      <div className="main-container">
         <Header />
-        <Rates rates={filteredRates} actions={actions} />
+        <Rates data={filteredRates} />
       </div>
     );
   }
