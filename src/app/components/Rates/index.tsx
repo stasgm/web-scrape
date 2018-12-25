@@ -1,41 +1,45 @@
 import * as React from 'react';
 // import * as style from './style.css';
-import { RateState, ICurrencyRates /* ICurrency, IRate */ } from '@models';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
+
+import { RateState, ICurrencyRates, ICurrency } from '@models';
+import { entityAPI } from 'app/api';
+import { IRateModel } from 'app/models/rates-model';
 
 interface IProps {
   data: RateState;
 }
 
-/* const RateLine = () => {
-  return;
-};
- */
-/* const getLine = (arr: any) =>
-  Object.keys(arr).map((itm) => `${itm} - ${arr[itm].map((i: any) => i)}`); */
+const expandedRowRender = (rates: ICurrency) => {
+  interface ITableRecord {
+    key: string;
+    curName: string;
+    rate: number;
+    ask: number;
+    bid: number;
+  }
 
-// const expandedRowRender = () => [];
-
-/* const expandedRowRender = () => {
-  const columns = [
+  const columns: Array<ColumnProps<ITableRecord>> = [
     { title: 'Наименование', dataIndex: 'curName', key: 'curName' },
     { title: 'НБРБ', dataIndex: 'rate', key: 'rate' },
     { title: 'Покупка', dataIndex: 'ask', key: 'ask' },
     { title: 'Продажа', dataIndex: 'bid', key: 'bid' }
   ];
 
-  const data: any = [];
-
-  for (let i = 0; i < 3; ++i) {
-    data.push({
+  const data: ITableRecord[] = Object.keys(rates).map(
+    (i: string): ITableRecord => ({
       key: i,
-      date: '2014-12-24 23:12:00',
-      name: 'This is production name',
-      upgradeNum: 'Upgraded: 56'
-    });
-  }
-  return <Table columns={columns} dataSource={data} pagination={false} />;
-}; */
+      curName: i,
+      rate: rates[i] ? rates[i].rate : 0,
+      ask: rates[i] ? rates[i].ask : 0,
+      bid: rates[i] ? rates[i].bid : 0
+    })
+  );
+
+  return <Table<ITableRecord> columns={columns} dataSource={data} pagination={false} />;
+};
+
 interface ITableTitle {
   date: string;
   USD: number;
@@ -54,24 +58,48 @@ const getDate = (date: ICurrencyRates[]): ITableTitle[] => {
   });
 };
 
+const handleOnSave = (data: string) => {
+  entityAPI.addRecord(data);
+};
+
+const fetchData = (): IRateModel[] => {
+  entityAPI
+    .fetchData()
+    .then((res) => {
+      return res;
+    })
+    .catch((e) => {
+      console.log({ statusMessage: `Ошибка: ${e.message}`, loadingRateStatus: false });
+      return [];
+    });
+};
+
 export const Rates = (props: IProps) => {
   const tableData = getDate(props.data.rates);
 
-  const columns = [
+  const columns: Array<ColumnProps<ITableTitle>> = [
     { title: 'Дата', dataIndex: 'date', key: 'date' },
-    { title: 'USD', dataIndex: 'USD', key: 'USD' },
-    { title: 'EUR', dataIndex: 'EUR', key: 'EUR' },
-    { title: 'RUB', dataIndex: 'RUB', key: 'RUB' }
+    { title: 'USD', dataIndex: 'USD', key: 'USD', align: 'right' },
+    { title: 'EUR', dataIndex: 'EUR', key: 'EUR', align: 'right' },
+    { title: 'RUB', dataIndex: 'RUB', key: 'RUB', align: 'right' }
   ];
 
   return (
-    <Table
-      className="components-table-demo-nested"
-      size="small"
-      bordered={true}
-      columns={columns}
-      // expandedRowRender={expandedRowRender}
-      dataSource={tableData}
-    />
+    <>
+      <Button onClick={fetchData}>Загрузить</Button>
+      <Button onClick={() => handleOnSave(JSON.stringify(props.data.rates, null, 1))}>
+        Сохранить
+      </Button>
+      <Table<ITableTitle>
+        bordered={false}
+        columns={columns}
+        expandedRowRender={(rec) =>
+          expandedRowRender(
+            props.data.rates.find((i) => i.date.toLocaleDateString() === rec.date)!.currencies
+          )
+        }
+        dataSource={tableData}
+      />
+    </>
   );
 };

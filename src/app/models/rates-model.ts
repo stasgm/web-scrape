@@ -4,9 +4,9 @@ export interface IRate {
   bid: number;
 }
 
-export interface ICurrency {
-  [name: string]: IRate;
-}
+export type Currencies = 'USD' | 'EUR' | 'RUB';
+
+export type ICurrency = { [k in Currencies]?: IRate };
 
 export interface ICurrencyRates {
   date: Date;
@@ -28,6 +28,11 @@ export const testData: IRateModel = {
           bid: 0.39
         },
         USD: {
+          rate: 27.86,
+          ask: 28.1,
+          bid: 27.65
+        },
+        EUR: {
           rate: 27.86,
           ask: 28.1,
           bid: 27.65
