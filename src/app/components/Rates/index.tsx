@@ -1,11 +1,10 @@
 import * as React from 'react';
 // import * as style from './style.css';
-import { Table, Button } from 'antd';
+import { Table } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 
 import { RateState, ICurrencyRates, ICurrency } from '@models';
-import { entityAPI } from 'app/api';
-import { IRateModel } from 'app/models/rates-model';
+// import { entityAPI } from 'app/api';
 
 interface IProps {
   data: RateState;
@@ -47,8 +46,8 @@ interface ITableTitle {
   RUB: number;
 }
 
-const getDate = (date: ICurrencyRates[]): ITableTitle[] => {
-  return date.map((i: ICurrencyRates) => {
+const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
+  return data.map((i: ICurrencyRates) => {
     return {
       date: i.date.toLocaleDateString(),
       USD: i.currencies.USD ? i.currencies.USD.rate : 0,
@@ -58,24 +57,12 @@ const getDate = (date: ICurrencyRates[]): ITableTitle[] => {
   });
 };
 
-const handleOnSave = (data: string) => {
-  entityAPI.addRecord(data);
-};
-
-const fetchData = (): IRateModel[] => {
-  entityAPI
-    .fetchData()
-    .then((res) => {
-      return res;
-    })
-    .catch((e) => {
-      console.log({ statusMessage: `Ошибка: ${e.message}`, loadingRateStatus: false });
-      return [];
-    });
-};
-
 export const Rates = (props: IProps) => {
-  const tableData = getDate(props.data.rates);
+  // console.log({ rates: props.data[0] });
+  const tableData: any = [];
+  const newdata: RateState = { rates: props.data[0] };
+  // const tableData = getDate(newdata.rates);
+  console.log(newdata);
 
   const columns: Array<ColumnProps<ITableTitle>> = [
     { title: 'Дата', dataIndex: 'date', key: 'date' },
@@ -86,18 +73,14 @@ export const Rates = (props: IProps) => {
 
   return (
     <>
-      <Button onClick={fetchData}>Загрузить</Button>
-      <Button onClick={() => handleOnSave(JSON.stringify(props.data.rates, null, 1))}>
-        Сохранить
-      </Button>
       <Table<ITableTitle>
         bordered={false}
         columns={columns}
-        expandedRowRender={(rec) =>
+        /*   expandedRowRender={(rec) =>
           expandedRowRender(
             props.data.rates.find((i) => i.date.toLocaleDateString() === rec.date)!.currencies
           )
-        }
+        } */
         dataSource={tableData}
       />
     </>
