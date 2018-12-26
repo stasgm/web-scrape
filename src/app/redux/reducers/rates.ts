@@ -10,6 +10,9 @@ const initialState: RateState = {
 
 export const ratesReducer = (state: RateState = initialState, action: RatesAction): RateState => {
   switch (action.type) {
+    case getType(rates.ratesActions.fetchRates.success): {
+      return action.payload;
+    }
     case getType(rates.ratesActions.addRate): {
       return state;
     }

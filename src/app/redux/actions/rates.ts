@@ -1,16 +1,16 @@
 // import cuid from 'cuid';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
-import { IRate, ICurrencyRates } from '@models';
+import { IRate, RateState } from '@models';
 
 export const ratesActions = {
   addRate: createAction('ADD_RATE', (resolve) => {
     return (rate: IRate) => resolve(rate);
   }),
-  loadArticles: createAsyncAction(
-    'REQUEST_LOAD_ARTICLES',
+  fetchRates: createAsyncAction(
+    'REQUEST_LOAD ',
     'REQUEST_LOAD_SUCCEEDED',
     'REQUEST_LOAD_FAILED'
-  )<void, ICurrencyRates, Error>()
+  )<void, RateState, Error>()
 };
 
 export type TRatesActions = ActionType<typeof ratesActions>;
