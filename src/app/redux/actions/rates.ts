@@ -1,7 +1,5 @@
 // import cuid from 'cuid';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
-import { Dispatch } from 'redux';
-import { entityAPI } from 'app/api';
 import { IRate, ICurrencyRates } from '@models';
 
 export const ratesActions = {
@@ -13,18 +11,6 @@ export const ratesActions = {
     ICurrencyRates[],
     Error
   >()
-};
-
-export const fetchData = () => {
-  return async (dispatch: Dispatch) => {
-    dispatch(ratesActions.fetchRates.request());
-    try {
-      const res = await entityAPI.fetchRates();
-      dispatch(ratesActions.fetchRates.success(res));
-    } catch (err) {
-      dispatch(ratesActions.fetchRates.failure(err));
-    }
-  };
 };
 
 export type TRatesActions = ActionType<typeof ratesActions>;
