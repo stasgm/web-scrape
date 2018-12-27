@@ -52,7 +52,7 @@ const mapStateToProps = (state: IRootState): IStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => {
   return {
-    onFetchData: () => dispatch(fetchData()),
+    onFetchData: () => dispatch<any>(fetchData()),
     onAddRate: () => dispatch(ratesActions.addRate({ ask: 0, bid: 0, rate: 0 }))
   };
 };
