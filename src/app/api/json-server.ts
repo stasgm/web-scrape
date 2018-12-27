@@ -1,11 +1,11 @@
-import { RateState } from '@models';
+import { ICurrencyRates, IRate } from '@models';
 import { json, post } from './common/http.service';
 
-export const fetchData = async (): Promise<RateState> => {
+export const fetchRates = async (): Promise<ICurrencyRates[]> => {
   return json('/rates');
 };
 
-export const addRecord = async (data: any): Promise<RateState> => {
+export const addRecord = async (data: any): Promise<IRate> => {
   return post('/rates', data);
 };
 

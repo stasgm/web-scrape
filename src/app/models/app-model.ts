@@ -1,3 +1,4 @@
-interface IApp {
+export interface IApp {
   isLoading: boolean;
+  hasErrored: boolean;
 }

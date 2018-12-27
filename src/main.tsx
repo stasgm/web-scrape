@@ -8,9 +8,14 @@ import { configureStore } from '@redux/store';
 import { App } from 'app';
 import './app/styles/index.scss';
 
+const initialState = {
+  currencyRates: {
+    rates: []
+  }
+};
 // prepare store
 const history = createBrowserHistory();
-const store = configureStore();
+const store = configureStore(initialState);
 
 ReactDOM.render(
   <Provider store={store}>

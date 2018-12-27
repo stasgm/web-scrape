@@ -1,6 +1,7 @@
 import { ActionType, getType } from 'typesafe-actions';
-import { RateState } from '@models';
 import * as rates from '../actions';
+import { RateState } from 'app/models';
+import { Reducer } from 'redux';
 
 export type RatesAction = ActionType<typeof rates>;
 
@@ -8,10 +9,14 @@ const initialState: RateState = {
   rates: []
 };
 
-export const ratesReducer = (state: RateState = initialState, action: RatesAction): RateState => {
+export const ratesReducer: Reducer<RateState, RatesAction> = (
+  state = initialState,
+  action
+): RateState => {
   switch (action.type) {
     case getType(rates.ratesActions.fetchRates.success): {
-      return action.payload;
+      console.log('reducer', state);
+      return { ...state, rates: action.payload };
     }
     case getType(rates.ratesActions.addRate): {
       return state;

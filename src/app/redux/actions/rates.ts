@@ -1,20 +1,33 @@
 // import cuid from 'cuid';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
-import { IRate, RateState } from '@models';
+import { Dispatch } from 'redux';
+import { entityAPI } from 'app/api';
+import { IRate, ICurrencyRates } from '@models';
 
 export const ratesActions = {
   addRate: createAction('ADD_RATE', (resolve) => {
     return (rate: IRate) => resolve(rate);
   }),
-  fetchRates: createAsyncAction(
-    'REQUEST_LOAD ',
-    'REQUEST_LOAD_SUCCEEDED',
-    'REQUEST_LOAD_FAILED'
-  )<void, RateState, Error>()
+  fetchRates: createAsyncAction('REQUEST_LOAD ', 'REQUEST_LOAD_SUCCEEDED', 'REQUEST_LOAD_FAILED')<
+    void,
+    ICurrencyRates[],
+    Error
+  >()
+};
+
+export const fetchData = () => {
+  return async (dispatch: Dispatch) => {
+    dispatch(ratesActions.fetchRates.request());
+    try {
+      const res = await entityAPI.fetchRates();
+      dispatch(ratesActions.fetchRates.success(res));
+    } catch (err) {
+      dispatch(ratesActions.fetchRates.failure(err));
+    }
+  };
 };
 
 export type TRatesActions = ActionType<typeof ratesActions>;
-
 /* export const ratesActions = {
   addRate: createAction('ADD_RATE', resolve => {
     return (rate: IRateModel) => resolve(rate);

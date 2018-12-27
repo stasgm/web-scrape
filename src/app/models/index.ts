@@ -1,4 +1,5 @@
 import { IRateModel } from './rates-model';
+
 export {
   IRateModel as RateState,
   testData,
@@ -9,5 +10,5 @@ export {
 } from './rates-model';
 
 export interface IRootState {
-  rates: IRateModel;
+  currencyRates: IRateModel;
 }

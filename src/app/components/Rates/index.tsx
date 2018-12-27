@@ -3,14 +3,15 @@ import * as React from 'react';
 import { Table } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 
-import { RateState, ICurrencyRates, ICurrency } from '@models';
+// import { RateState } from '@models';
+import { ICurrencyRates } from '@models';
 // import { entityAPI } from 'app/api';
 
 interface IProps {
-  data: RateState;
+  data: ICurrencyRates[];
 }
 
-const expandedRowRender = (rates: ICurrency) => {
+/* const expandedRowRender = (rates: ICurrency) => {
   interface ITableRecord {
     key: string;
     curName: string;
@@ -38,7 +39,7 @@ const expandedRowRender = (rates: ICurrency) => {
 
   return <Table<ITableRecord> columns={columns} dataSource={data} pagination={false} />;
 };
-
+ */
 interface ITableTitle {
   date: string;
   USD: number;
@@ -47,9 +48,10 @@ interface ITableTitle {
 }
 
 const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
+  // console.log(data);
   return data.map((i: ICurrencyRates) => {
     return {
-      date: i.date.toLocaleDateString(),
+      date: new Date(i.date).toLocaleDateString(),
       USD: i.currencies.USD ? i.currencies.USD.rate : 0,
       EUR: i.currencies.EUR ? i.currencies.EUR.rate : 0,
       RUB: i.currencies.RUB ? i.currencies.RUB.rate : 0
@@ -58,11 +60,9 @@ const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
 };
 
 export const Rates = (props: IProps) => {
-  // console.log({ rates: props.data[0] });
-  const tableData: any = [];
-  const newdata: RateState = { rates: props.data[0] };
-  // const tableData = getDate(newdata.rates);
-  console.log(newdata);
+  const tableData: ITableTitle[] = [];
+  // const tableData = getDate(props.data);
+  console.log('rates', props.data);
 
   const columns: Array<ColumnProps<ITableTitle>> = [
     { title: 'Дата', dataIndex: 'date', key: 'date' },

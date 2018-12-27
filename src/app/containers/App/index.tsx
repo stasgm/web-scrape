@@ -1,52 +1,67 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-
-import { TRatesActions } from '@redux/actions';
-import { RateState, testData } from '@models';
-import { Header, Rates } from 'app/components';
+import { connect } from 'react-redux';
 import { Button } from 'antd';
+import { Dispatch } from 'redux';
+
+import { ratesActions, fetchData } from '@redux/actions';
+import { RateState, IRootState } from '@models';
+import { Header, Rates } from 'app/components';
 import { entityAPI } from 'app/api';
-// import * as style from './style.css';
 import './style.scss';
 
-export interface IProps extends RouteComponentProps<void> {
-  rates: RateState;
-  actions: TRatesActions;
+interface IStateProps {
+  currencyRates: RateState;
 }
 
-export interface IState {
-  rates: RateState;
-  actions?: TRatesActions;
+interface IDispatchProps {
+  onFetchData: () => void;
+  onAddRate: () => void;
 }
 
-// const filteredRates: RateState = testData;
+interface IState {
+  filterText: string;
+}
 
-export class App extends React.Component<IProps, IState> {
+type IProps = IStateProps & IDispatchProps;
+class AppContainer extends React.Component<IProps, IState> {
   public state: Readonly<IState> = {
-    rates: { rates: [] }
+    filterText: ''
   };
 
   public handleOnSave = (data: any) => {
     entityAPI.addRecord(JSON.stringify(data, null, 1));
   };
 
-  public fetchData = async () => {
-    try {
-      const rateList = await entityAPI.fetchData();
-      console.log({ statusMessage: `Загружено: ${JSON.stringify(rateList, null, 1)}` });
-      this.setState({ rates: rateList });
-    } catch (err) {
-      console.log({ statusMessage: `Ошибка: ${err.message}`, loadingRateStatus: false });
-    }
-  };
   public render() {
     return (
       <div className="main-container">
         <Header />
-        <Button onClick={this.fetchData}>Загрузить</Button>
-        <Button onClick={() => this.handleOnSave(this.state.rates)}>Сохранить</Button>
-        <Rates data={this.state.rates} />
+        <Button onClick={this.props.onFetchData}>Загрузить</Button>
+        <Button onClick={() => this.handleOnSave(this.props.currencyRates.rates)}>Сохранить</Button>
+        <Rates data={this.props.currencyRates.rates} />
       </div>
     );
   }
 }
+
+const mapStateToProps = (state: IRootState): IStateProps => ({
+  currencyRates: state.currencyRates
+  // isLoading: state.app.isLoading,
+  // hasErrored: state.app.hasErrored
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<any>): IDispatchProps => {
+  return {
+    onFetchData: () => dispatch(fetchData()),
+    onAddRate: () => dispatch(ratesActions.addRate({ ask: 0, bid: 0, rate: 0 }))
+  };
+};
+
+export const App = connect<IStateProps, IDispatchProps>(
+  mapStateToProps,
+  mapDispatchToProps
+  /* {
+    onFetchData: () => fetchData(),
+    onAddRate: () => ratesActions.addRate({ ask: 0, bid: 0, rate: 0 })
+  } */
+)(AppContainer);

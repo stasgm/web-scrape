@@ -1,1 +1,1 @@
-export { TRatesActions, ratesActions } from './rates';
+export { TRatesActions, ratesActions, fetchData } from './rates';

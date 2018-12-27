@@ -1,7 +1,7 @@
-import { addRecord, fetchData } from './json-server';
+import { addRecord, fetchRates } from './json-server';
 
 export const entityAPI = {
   // fetchGameData,
   addRecord,
-  fetchData
+  fetchRates
 };
