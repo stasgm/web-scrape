@@ -8,9 +8,12 @@ import { RateState, IRootState } from '@models';
 import { Header, Rates } from 'app/components';
 import { entityAPI } from 'app/api';
 import './style.scss';
+import { AddRate } from 'app/components/AddRate';
 
 interface IStateProps {
   currencyRates: RateState;
+  isLoading: boolean;
+  hasErrored: boolean;
 }
 
 interface IDispatchProps {
@@ -36,18 +39,25 @@ class AppContainer extends React.Component<IProps, IState> {
     return (
       <div className="main-container">
         <Header />
-        <Button onClick={this.props.onFetchData}>Загрузить</Button>
-        <Button onClick={() => this.handleOnSave(this.props.currencyRates.rates)}>Сохранить</Button>
-        <Rates data={this.props.currencyRates.rates} />
+        <div className="content">
+          <AddRate onAdd={this.props.onAddRate}/>
+          <div className="buttons">
+            <Button onClick={this.props.onFetchData}>Загрузить</Button>
+            <Button onClick={() => this.handleOnSave(this.props.currencyRates.rates)}>
+              Сохранить
+            </Button>
+          </div>
+          <Rates data={this.props.currencyRates.rates} isLoading={this.props.isLoading} />
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: IRootState): IStateProps => ({
-  currencyRates: state.currencyRates
-  // isLoading: state.app.isLoading,
-  // hasErrored: state.app.hasErrored
+  currencyRates: state.currencyRates,
+  isLoading: state.currencyRates.isLoading,
+  hasErrored: state.currencyRates.hasErrored
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => {
@@ -60,10 +70,6 @@ const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => {
 export const App = connect<IStateProps, IDispatchProps, {}, IRootState>(
   mapStateToProps,
   mapDispatchToProps
-  /* {
-    onFetchData: () => fetchData(),
-    onAddRate: () => ratesActions.addRate({ ask: 0, bid: 0, rate: 0 })
-  } */
 )(AppContainer);
 
 const fetchData = () => {

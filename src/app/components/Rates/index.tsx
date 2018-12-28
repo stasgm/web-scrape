@@ -1,14 +1,12 @@
 import * as React from 'react';
-// import * as style from './style.css';
 import { Table } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 
-// import { RateState } from '@models';
 import { ICurrencyRates } from '@models';
-// import { entityAPI } from 'app/api';
 
 interface IProps {
   data: ICurrencyRates[];
+  isLoading: boolean;
 }
 
 /* const expandedRowRender = (rates: ICurrency) => {
@@ -48,7 +46,7 @@ interface ITableTitle {
 }
 
 const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
-  // console.log(data);
+  // console.log('getData', data);
   return data.map((i: ICurrencyRates) => {
     return {
       date: new Date(i.date).toLocaleDateString(),
@@ -60,9 +58,9 @@ const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
 };
 
 export const Rates = (props: IProps) => {
-  const tableData: ITableTitle[] = [];
-  // const tableData = getDate(props.data);
-  console.log('rates', props.data);
+  // const tableData: ITableTitle[] = [];
+  const tableData = getDate(props.data);
+  // console.log('rates', props.data);
 
   const columns: Array<ColumnProps<ITableTitle>> = [
     { title: 'Дата', dataIndex: 'date', key: 'date' },
@@ -81,6 +79,7 @@ export const Rates = (props: IProps) => {
             props.data.rates.find((i) => i.date.toLocaleDateString() === rec.date)!.currencies
           )
         } */
+        loading={props.isLoading}
         dataSource={tableData}
       />
     </>

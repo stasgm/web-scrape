@@ -15,9 +15,11 @@ export interface ICurrencyRates {
 
 export interface IRateModel {
   rates: ICurrencyRates[];
+  isLoading: boolean;
+  hasErrored: boolean;
 }
 
-export const testData: IRateModel = {
+export const testData: Partial<IRateModel> = {
   rates: [
     {
       date: new Date('2018-12-19T19:19:09+02:00'),

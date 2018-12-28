@@ -10,7 +10,9 @@ import './app/styles/index.scss';
 
 const initialState = {
   currencyRates: {
-    rates: []
+    rates: [],
+    hasErrored: false,
+    isLoading: false
   }
 };
 // prepare store

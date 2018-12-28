@@ -6,7 +6,9 @@ import { Reducer } from 'redux';
 export type RatesAction = ActionType<typeof rates>;
 
 const initialState: RateState = {
-  rates: []
+  rates: [],
+  hasErrored: false,
+  isLoading: false
 };
 
 export const ratesReducer: Reducer<RateState, RatesAction> = (
@@ -14,9 +16,14 @@ export const ratesReducer: Reducer<RateState, RatesAction> = (
   action
 ): RateState => {
   switch (action.type) {
+    case getType(rates.ratesActions.fetchRates.request): {
+      return { ...state, isLoading: true, hasErrored: false };
+    }
     case getType(rates.ratesActions.fetchRates.success): {
-      console.log('reducer', state);
-      return { ...state, rates: action.payload };
+      return { ...state, rates: action.payload, isLoading: false, hasErrored: false };
+    }
+    case getType(rates.ratesActions.fetchRates.failure): {
+      return { ...state, rates: [], isLoading: false, hasErrored: true };
     }
     case getType(rates.ratesActions.addRate): {
       return state;
