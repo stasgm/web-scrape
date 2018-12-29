@@ -4,11 +4,13 @@ import { Button } from 'antd';
 import { Dispatch } from 'redux';
 
 import { ratesActions } from '@redux/actions';
-import { RateState, IRootState } from '@models';
+import { RateState, IRootState, ICurrencyRates } from '@models';
 import { Header, Rates } from 'app/components';
 import { entityAPI } from 'app/api';
-import './style.scss';
 import { AddRate } from 'app/components/AddRate';
+
+import './style.scss';
+
 
 interface IStateProps {
   currencyRates: RateState;
@@ -18,7 +20,7 @@ interface IStateProps {
 
 interface IDispatchProps {
   onFetchData: () => void;
-  onAddRate: () => void;
+  onAddRate: (data: ICurrencyRates) => void;
 }
 
 interface IState {
@@ -63,7 +65,7 @@ const mapStateToProps = (state: IRootState): IStateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => {
   return {
     onFetchData: () => dispatch<any>(fetchData()),
-    onAddRate: () => dispatch(ratesActions.addRate({ ask: 0, bid: 0, rate: 0 }))
+    onAddRate: () => dispatch(ratesActions.addRate({  ask: 0, bid: 0, rate: 0 }))
   };
 };
 
