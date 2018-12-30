@@ -4,13 +4,21 @@ export interface IRate {
   bid: number;
 }
 
-export type Currencies = 'USD' | 'EUR' | 'RUB';
+type Currencies = 'USD' | 'EUR' | 'RUB';
 
-export type ICurrency = { [k in Currencies]?: IRate };
+export type ICurrencyCode = { [k in Currencies]?: IRate };
+
+export interface ICurrency {
+  shortName: string;
+  abbr?: ICurrencyCode;
+  code: string;
+  name: string;
+}
 
 export interface ICurrencyRates {
+  id?: string;
   date: Date;
-  currencies: ICurrency;
+  currencies: ICurrencyCode;
 }
 
 export interface IRateModel {

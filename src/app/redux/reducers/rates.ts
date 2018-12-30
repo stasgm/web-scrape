@@ -1,6 +1,6 @@
 import { ActionType, getType } from 'typesafe-actions';
-import * as rates from '../actions';
-import { RateState } from 'app/models';
+import * as rates from '../actions/rates';
+import { RateState } from '@models';
 import { Reducer } from 'redux';
 
 export type RatesAction = ActionType<typeof rates>;
@@ -16,17 +16,29 @@ export const ratesReducer: Reducer<RateState, RatesAction> = (
   action
 ): RateState => {
   switch (action.type) {
+    case getType(rates.ratesActions.addRate): {
+      console.log(action.payload);
+
+      return state;
+    }
+    case getType(rates.ratesActions.addRateRequest.request):
     case getType(rates.ratesActions.fetchRates.request): {
       return { ...state, isLoading: true, hasErrored: false };
     }
     case getType(rates.ratesActions.fetchRates.success): {
       return { ...state, rates: action.payload, isLoading: false, hasErrored: false };
     }
-    case getType(rates.ratesActions.fetchRates.failure): {
-      return { ...state, rates: [], isLoading: false, hasErrored: true };
+    case getType(rates.ratesActions.addRateRequest.success): {
+      return {
+        ...state,
+        rates: [...state.rates, action.payload],
+        isLoading: false,
+        hasErrored: false
+      };
     }
-    case getType(rates.ratesActions.addRate): {
-      return state;
+    case getType(rates.ratesActions.addRateRequest.failure):
+    case getType(rates.ratesActions.fetchRates.failure): {
+      return { ...state, isLoading: false, hasErrored: true };
     }
     default:
       return state;

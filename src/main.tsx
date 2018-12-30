@@ -7,12 +7,17 @@ import { Router } from 'react-router';
 import { configureStore } from '@redux/store';
 import { App } from 'app';
 import './app/styles/index.scss';
+import { IRootState } from 'app/models';
 
-const initialState = {
+const initialState: IRootState = {
   currencyRates: {
     rates: [],
     hasErrored: false,
     isLoading: false
+  },
+  options: {
+    name: '',
+    currencies: []
   }
 };
 // prepare store

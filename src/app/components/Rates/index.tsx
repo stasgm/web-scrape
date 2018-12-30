@@ -39,6 +39,7 @@ interface IProps {
 };
  */
 interface ITableTitle {
+  key?: string;
   date: string;
   USD: number;
   EUR: number;
@@ -46,23 +47,24 @@ interface ITableTitle {
 }
 
 const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
-  // console.log('getData', data);
-  return data.map((i: ICurrencyRates) => {
-    return {
-      date: new Date(i.date).toLocaleDateString(),
-      USD: i.currencies.USD ? i.currencies.USD.rate : 0,
-      EUR: i.currencies.EUR ? i.currencies.EUR.rate : 0,
-      RUB: i.currencies.RUB ? i.currencies.RUB.rate : 0
-    };
-  });
+  return data
+    .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
+    .map((i: ICurrencyRates) => {
+      return {
+        key: i.id,
+        date: new Date(i.date).toLocaleDateString(),
+        USD: i.currencies.USD ? i.currencies.USD.rate : 0,
+        EUR: i.currencies.EUR ? i.currencies.EUR.rate : 0,
+        RUB: i.currencies.RUB ? i.currencies.RUB.rate : 0
+      };
+    });
 };
 
 export const Rates = (props: IProps) => {
-  // const tableData: ITableTitle[] = [];
   const tableData = getDate(props.data);
-  // console.log('rates', props.data);
 
   const columns: Array<ColumnProps<ITableTitle>> = [
+    { title: 'ID', dataIndex: 'key', key: 'key' },
     { title: 'Дата', dataIndex: 'date', key: 'date' },
     { title: 'USD', dataIndex: 'USD', key: 'USD', align: 'right' },
     { title: 'EUR', dataIndex: 'EUR', key: 'EUR', align: 'right' },
@@ -71,6 +73,7 @@ export const Rates = (props: IProps) => {
 
   return (
     <>
+      <h1>Курсы</h1>
       <Table<ITableTitle>
         bordered={false}
         columns={columns}

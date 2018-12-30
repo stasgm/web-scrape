@@ -18,7 +18,8 @@
       "@components",
       "@modals",
       "@redux",
-      "antd/lib/table"
+      "antd/lib/table",
+      "api/common/config/"
     ],
     "no-unused-expression": true,
     "no-var-requires": false,

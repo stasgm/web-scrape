@@ -1,1 +1,2 @@
-export { TRatesActions, ratesActions } from './rates';
+export { ratesActions } from './rates';
+export { optionsActions } from './app';
