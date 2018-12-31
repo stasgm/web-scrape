@@ -1,15 +1,15 @@
-import { ICurrencyRates, ICurrency, IOptions } from '@models';
+import { ICurrencyRates, ICurrency, IProfile } from '@models';
 import { json, post } from './common/http.service';
 
 export const fetchRates = async (): Promise<ICurrencyRates[]> => {
   return json('/rates');
 };
 
-export const fetchProfile = async (): Promise<IOptions> => {
+export const fetchProfile = async (): Promise<IProfile> => {
   return json('/profile');
 };
 
-export const updateProfile = async (data: IOptions): Promise<any> => {
+export const updateProfile = async (data: IProfile): Promise<any> => {
   return post('/profile', data);
 };
 
@@ -18,6 +18,7 @@ export const addRecord = async (data: ICurrencyRates): Promise<any> => {
 };
 
 interface IBankCurrency {
+  Cur_id?: string;
   Cur_Abbreviation: string;
   Cur_Code: string;
   Cur_Name: string;
@@ -41,45 +42,3 @@ export const fetchCurrencies = async (): Promise<ICurrency[]> => {
     return [];
   }
 };
-
-// export const addRecord = (data: string) => {
-//   const params = {
-//     headers: {
-//       'content-type': 'application/json; charset=UTF-8'
-//     },
-//     body: data,
-//     method: 'POST'
-//   };
-
-//   fetch(baseURL, params)
-//     .then((res) => res.json())
-//     .then((res) => console.log(res));
-// };
-
-// export const deleteRecord = (data: string, id: number) => {
-//   const params = {
-//     headers: {
-//       'content-type': 'application/json; charset=UTF-8'
-//     },
-//     body: data,
-//     method: 'POST'
-//   };
-
-//   fetch(baseURL, params)
-//     .then((res) => res.json())
-//     .then((res) => console.log(res));
-// };
-
-// export const deleteRecords = () => {
-//   const params = {
-//     headers: {
-//       'content-type': 'application/json; charset=UTF-8'
-//     },
-//     body: '',
-//     method: 'POST'
-//   };
-
-//   fetch(baseURL, params)
-//     .then((res) => res.json())
-//     .then((res) => console.log(res));
-// };

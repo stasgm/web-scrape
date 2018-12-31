@@ -6,8 +6,9 @@ import { Router } from 'react-router';
 
 import { configureStore } from '@redux/store';
 import { App } from 'app';
-import './app/styles/index.scss';
 import { IRootState } from 'app/models';
+
+import 'app/styles/index.scss';
 
 const initialState: IRootState = {
   currencyRates: {
@@ -15,9 +16,11 @@ const initialState: IRootState = {
     hasErrored: false,
     isLoading: false
   },
-  options: {
+  profile: {
     name: '',
-    currencies: []
+    options: {
+      currencies: []
+    }
   }
 };
 // prepare store

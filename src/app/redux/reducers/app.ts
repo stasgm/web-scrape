@@ -1,27 +1,29 @@
 import { ActionType, getType } from 'typesafe-actions';
-import * as options from '../actions/app';
-import { OptionsState } from '@models';
+import * as profile from '../actions/app';
+import { ProfileState } from '@models';
 import { Reducer } from 'redux';
 
-export type OptionsAction = ActionType<typeof options>;
+export type ProfilesAction = ActionType<typeof profile>;
 
-const initialState: OptionsState = {
-  currencies: [],
+const initialState: ProfileState = {
+  options: {
+    currencies: []
+  },
   name: ''
 };
 
-export const optionsReducer: Reducer<OptionsState, OptionsAction> = (
+export const profileReducer: Reducer<ProfileState, ProfilesAction> = (
   state = initialState,
   action
-): OptionsState => {
+): ProfileState => {
   switch (action.type) {
-    case getType(options.optionsActions.fetchOptions.request): {
+    case getType(profile.profileActions.fetchProfile.request): {
       return state;
     }
-    case getType(options.optionsActions.fetchOptions.success): {
+    case getType(profile.profileActions.fetchProfile.success): {
       return action.payload;
     }
-    case getType(options.optionsActions.fetchOptions.failure): {
+    case getType(profile.profileActions.fetchProfile.failure): {
       return state;
     }
     default:

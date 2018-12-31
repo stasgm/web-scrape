@@ -1,5 +1,5 @@
 import { IRateModel } from './rates-model';
-import { IOptions } from './app-model';
+import { IProfile } from './app-model';
 
 export {
   IRateModel as RateState,
@@ -9,9 +9,9 @@ export {
   ICurrency
 } from './rates-model';
 
-export { IOptions, IOptions as OptionsState } from './app-model';
+export { IProfile, IProfile as ProfileState } from './app-model';
 
 export interface IRootState {
   currencyRates: IRateModel;
-  options: IOptions;
+  profile: IProfile;
 }

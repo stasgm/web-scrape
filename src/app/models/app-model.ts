@@ -4,6 +4,10 @@
 }
  */
 export interface IOptions {
-  name: string;
   currencies: string[];
+}
+
+export interface IProfile {
+  name: string;
+  options: IOptions;
 }

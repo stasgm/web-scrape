@@ -25,6 +25,12 @@ export const Linkmenu = withRouter((props: any) => {
           Курсы
         </Link>
       </Menu.Item>
+      <Menu.Item key={RoutesEnum.Map}>
+        <Link to={RoutesEnum.Map}>
+          <i className="fas map-marked-alt" />
+          Карта
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 });

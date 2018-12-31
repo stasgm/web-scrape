@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 
 import { ICurrencyRates } from '@models';
-
-interface IProps {
+import { RatesProps } from 'app/containers/';
+/* interface IProps {
   data: ICurrencyRates[];
   isLoading: boolean;
-}
+} */
 
 /* const expandedRowRender = (rates: ICurrency) => {
   interface ITableRecord {
@@ -46,7 +46,7 @@ interface ITableTitle {
   RUB: number;
 }
 
-const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
+const getData = (data: ICurrencyRates[]): ITableTitle[] => {
   return data
     .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
     .map((i: ICurrencyRates) => {
@@ -60,8 +60,8 @@ const getDate = (data: ICurrencyRates[]): ITableTitle[] => {
     });
 };
 
-export const Rates = (props: IProps) => {
-  const tableData = getDate(props.data);
+const RateList = (props: { data: ICurrencyRates[]; isLoading: boolean }) => {
+  const tableData = getData(props.data);
 
   const columns: Array<ColumnProps<ITableTitle>> = [
     { title: 'ID', dataIndex: 'key', key: 'key' },
@@ -70,10 +70,9 @@ export const Rates = (props: IProps) => {
     { title: 'EUR', dataIndex: 'EUR', key: 'EUR', align: 'right' },
     { title: 'RUB', dataIndex: 'RUB', key: 'RUB', align: 'right' }
   ];
-
   return (
     <>
-      <h1>Курсы</h1>
+      <h3 style={{ marginBottom: 16 }}>Курсы выбранных валюты:</h3>
       <Table<ITableTitle>
         bordered={false}
         columns={columns}
@@ -88,3 +87,25 @@ export const Rates = (props: IProps) => {
     </>
   );
 };
+export class Rates extends React.Component<RatesProps, {}> {
+  public handleOnSave = (data: any) => {
+    // entityAPI.addRecord(JSON.stringify(data, null, 1));
+  };
+
+  // export const Rates = (props: RatesProps) => {
+
+  public render() {
+    return (
+      <div className="content">
+        {/* {<AddRate onAdd={this.props.onAddRate} />} */}
+        <div className="buttons">
+          <Button onClick={this.props.onFetchData}>Загрузить</Button>
+          <Button onClick={() => this.handleOnSave(this.props.currencyRates.rates)}>
+            Сохранить
+          </Button>
+        </div>
+        <RateList data={this.props.currencyRates.rates} isLoading={this.props.isLoading} />
+      </div>
+    );
+  }
+}

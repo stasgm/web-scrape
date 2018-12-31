@@ -1,2 +1,2 @@
 export { ratesActions } from './rates';
-export { optionsActions } from './app';
+export { profileActions } from './app';

@@ -3,37 +3,43 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { ratesActions } from '@redux/actions';
-import { IRootState } from '@models';
-import { Main } from 'app/components';
+import { RateState, IRootState, ICurrencyRates } from '@models';
+import { Rates } from 'app/components';
 import { entityAPI } from 'app/api';
+// import { AddRate } from 'app/components/Rates/AddRate';
 
 interface IStateProps {
-  currencies: string[];
+  currencyRates: RateState;
+  isLoading: boolean;
+  hasErrored: boolean;
 }
 
 interface IDispatchProps {
   onFetchData: () => void;
+  onAddRate: (data: ICurrencyRates) => void;
 }
 
+export type IProps = IStateProps & IDispatchProps;
+
 const mapStateToProps = (state: IRootState): IStateProps => ({
-  currencies: state.options.currencies
-  // currencyRates: state.currencyRates,
-  // isLoading: state.currencyRates.isLoading,
-  // hasErrored: state.currencyRates.hasErrored
+  currencyRates: state.currencyRates,
+  isLoading: state.currencyRates.isLoading,
+  hasErrored: state.currencyRates.hasErrored
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => {
   return {
-    onFetchData: () => dispatch<any>(fetchCurrency())
+    onFetchData: () => dispatch<any>(fetchData()),
+    onAddRate: (data: ICurrencyRates) => dispatch<any>(addRecord(data))
   };
 };
 
-export const MainContainer = connect<IStateProps, IDispatchProps, {}, IRootState>(
+export const RateList = connect<IStateProps, IDispatchProps, {}, IRootState>(
   mapStateToProps,
   mapDispatchToProps
-)(Main);
+)(Rates);
 
-const fetchCurrency = () => {
+const fetchData = () => {
   return async (dispatch: Dispatch) => {
     dispatch(ratesActions.fetchRates.request());
     try {
@@ -44,7 +50,7 @@ const fetchCurrency = () => {
     }
   };
 };
-/*
+
 const addRecord = (data: ICurrencyRates) => {
   return async (dispatch: Dispatch) => {
     dispatch(ratesActions.addRateRequest.request());
@@ -56,4 +62,3 @@ const addRecord = (data: ICurrencyRates) => {
     }
   };
 };
- */

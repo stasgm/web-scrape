@@ -1,12 +1,12 @@
 import { createAsyncAction } from 'typesafe-actions';
-import { OptionsState } from '@models';
+import { ProfileState } from '@models';
 
-export const optionsActions = {
-  fetchOptions: createAsyncAction(
-    'REQUEST_FETCH_OPTIONS',
-    'REQUEST_FETCH_OPTIONS_SUCCEEDED',
-    'REQUEST_FETCH_OPTIONS_FAILED'
-  )<void, OptionsState, Error>()
+export const profileActions = {
+  fetchProfile: createAsyncAction(
+    'REQUEST_FETCH_PROFILE',
+    'REQUEST_FETCH_PROFILE_SUCCEEDED',
+    'REQUEST_FETCH_PROFILE_FAILED'
+  )<void, ProfileState, Error>()
 };
 
-// export type TOptionsActions = ActionType<typeof optionsActions>;
+// export type TPROFILEActions = ActionType<typeof PROFILEActions>;
