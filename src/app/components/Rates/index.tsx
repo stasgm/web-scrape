@@ -47,7 +47,8 @@ interface ITableTitle {
 }
 
 const getData = (data: ICurrencyRates[]): ITableTitle[] => {
-  return data
+  return [];
+  /*   return data
     .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
     .map((i: ICurrencyRates) => {
       return {
@@ -57,7 +58,7 @@ const getData = (data: ICurrencyRates[]): ITableTitle[] => {
         EUR: i.currencies.EUR ? i.currencies.EUR.rate : 0,
         RUB: i.currencies.RUB ? i.currencies.RUB.rate : 0
       };
-    });
+    }); */
 };
 
 const RateList = (props: { data: ICurrencyRates[]; isLoading: boolean }) => {

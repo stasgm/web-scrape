@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => {
   };
 };
 
-export const RateList = connect<IStateProps, IDispatchProps, {}, IRootState>(
+export const RatesContainer = connect<IStateProps, IDispatchProps, {}, IRootState>(
   mapStateToProps,
   mapDispatchToProps
 )(Rates);

@@ -1,8 +1,12 @@
-import { ICurrencyRates, ICurrency, IProfile } from '@models';
+import { ICurrencyRates, ICurrency, IProfile, ICurrentRates } from '@models';
 import { json, post } from './common/http.service';
 
 export const fetchRates = async (): Promise<ICurrencyRates[]> => {
   return json('/rates');
+};
+
+export const fetchCurrentRates = async (): Promise<ICurrentRates> => {
+  return json('/now');
 };
 
 export const fetchProfile = async (): Promise<IProfile> => {
@@ -42,3 +46,8 @@ export const fetchCurrencies = async (): Promise<ICurrency[]> => {
     return [];
   }
 };
+
+/* filter = (obj, keys) =>
+  Object.keys(obj)
+    .filter(key => keys.includes(key))
+    .reduce((res, key) => (res[key] = obj[key], res), {}); */

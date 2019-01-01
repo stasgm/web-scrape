@@ -29,7 +29,7 @@ export class AddRate extends React.Component<IProps, IState> {
 
   private handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { date, USD, EUR, RUB } = this.state;
+    /*     const { date, USD, EUR, RUB } = this.state;
     this.props.onAdd({
       date: date.toDate(),
       currencies: {
@@ -37,7 +37,7 @@ export class AddRate extends React.Component<IProps, IState> {
         EUR: { rate: EUR, bid: 0, ask: 0 },
         RUB: { rate: RUB, bid: 0, ask: 0 }
       }
-    });
+    }); */
   };
 
   public render() {

@@ -13,6 +13,7 @@ import 'app/styles/index.scss';
 const initialState: IRootState = {
   currencyRates: {
     rates: [],
+    currentRates: { currencies: {}, date: new Date() },
     hasErrored: false,
     isLoading: false
   },

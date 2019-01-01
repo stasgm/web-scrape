@@ -7,6 +7,7 @@ export type RatesAction = ActionType<typeof rates>;
 
 const initialState: RateState = {
   rates: [],
+  currentRates: { currencies: {}, date: new Date() },
   hasErrored: false,
   isLoading: false
 };
@@ -17,16 +18,18 @@ export const ratesReducer: Reducer<RateState, RatesAction> = (
 ): RateState => {
   switch (action.type) {
     case getType(rates.ratesActions.addRate): {
-      console.log(action.payload);
-
       return state;
     }
     case getType(rates.ratesActions.addRateRequest.request):
+    case getType(rates.ratesActions.fetchCurrentRates.request):
     case getType(rates.ratesActions.fetchRates.request): {
       return { ...state, isLoading: true, hasErrored: false };
     }
     case getType(rates.ratesActions.fetchRates.success): {
       return { ...state, rates: action.payload, isLoading: false, hasErrored: false };
+    }
+    case getType(rates.ratesActions.fetchCurrentRates.success): {
+      return { ...state, currentRates: action.payload, isLoading: false, hasErrored: false };
     }
     case getType(rates.ratesActions.addRateRequest.success): {
       return {
@@ -37,6 +40,7 @@ export const ratesReducer: Reducer<RateState, RatesAction> = (
       };
     }
     case getType(rates.ratesActions.addRateRequest.failure):
+    case getType(rates.ratesActions.fetchCurrentRates.failure):
     case getType(rates.ratesActions.fetchRates.failure): {
       return { ...state, isLoading: false, hasErrored: true };
     }

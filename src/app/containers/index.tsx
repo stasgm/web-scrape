@@ -1,2 +1,3 @@
-export { MainContainer } from './main';
-export { RateList, IProps as RatesProps } from './ratelist';
+export { MainContainer, IProps as MainProps } from './main';
+export { RatesContainer, IProps as RatesProps } from './ratelist';
+export { CurrenciesContainer, IProps as CurrenciesProps } from './currencies';

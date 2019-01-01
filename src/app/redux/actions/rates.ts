@@ -1,5 +1,5 @@
 import { createAction, createAsyncAction } from 'typesafe-actions';
-import { ICurrencyRates } from '@models';
+import { ICurrencyRates, ICurrentRates } from '@models';
 
 export const ratesActions = {
   addRate: createAction('ADD_RATE', (resolve) => {
@@ -10,6 +10,11 @@ export const ratesActions = {
     'REQUEST_ADD_RATE_SUCCEEDED',
     'REQUEST_ADD_RATE_FAILED'
   )<void, ICurrencyRates, Error>(),
+  fetchCurrentRates: createAsyncAction(
+    'REQUEST_FETCH_CURRENTRATES',
+    'REQUEST_FETCH_CURRENTRATES_SUCCEEDED',
+    'REQUEST_FETCH_CURRENTRATES_FAILED'
+  )<void, ICurrentRates, Error>(),
   fetchRates: createAsyncAction('REQUEST_LOAD ', 'REQUEST_LOAD_SUCCEEDED', 'REQUEST_LOAD_FAILED')<
     void,
     ICurrencyRates[],

@@ -4,9 +4,10 @@ import { IProfile } from './app-model';
 export {
   IRateModel as RateState,
   IRate,
-  ICurrencyCode,
+  ICurrencyRate,
   ICurrencyRates,
-  ICurrency
+  ICurrency,
+  ICurrentRates
 } from './rates-model';
 
 export { IProfile, IProfile as ProfileState } from './app-model';
