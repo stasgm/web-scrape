@@ -1,12 +1,20 @@
-import { ICurrencyRates, ICurrency, IProfile, ICurrentRates } from '@models';
+import { ICurrency, IProfile, IBank, IRate } from '@models';
 import { json, post } from './common/http.service';
 
-export const fetchRates = async (): Promise<ICurrencyRates[]> => {
-  return json('/rates');
+export const fetchCurrencies = async (): Promise<ICurrency[]> => {
+  return json('/currencies');
 };
 
-export const fetchCurrentRates = async (): Promise<ICurrentRates> => {
-  return json('/now');
+export const fetchBanks = async (): Promise<IBank[]> => {
+  return json('/banks');
+};
+
+export const fetchRates = async (date: Date): Promise<IRate[]> => {
+  return json(`/rates?date=${date}`);
+};
+
+export const fetchCurrentRates = async (): Promise<IRate[]> => {
+  return json(`/rates?date=${new Date().toDateString()}`);
 };
 
 export const fetchProfile = async (): Promise<IProfile> => {
@@ -17,18 +25,18 @@ export const updateProfile = async (data: IProfile): Promise<any> => {
   return post('/profile', data);
 };
 
-export const addRecord = async (data: ICurrencyRates): Promise<any> => {
+/* export const addRecord = async (data: ICurrencyRates): Promise<any> => {
   return post('/rates', data);
-};
+}; */
 
-interface IBankCurrency {
+/* interface IBankCurrency {
   Cur_id?: string;
   Cur_Abbreviation: string;
   Cur_Code: string;
   Cur_Name: string;
   Cur_DateEnd: string;
-}
-
+} */
+/*
 export const fetchCurrencies = async (): Promise<ICurrency[]> => {
   try {
     const res: IBankCurrency[] = await json('/currencies');
@@ -45,7 +53,7 @@ export const fetchCurrencies = async (): Promise<ICurrency[]> => {
   } catch (err) {
     return [];
   }
-};
+}; */
 
 /* filter = (obj, keys) =>
   Object.keys(obj)

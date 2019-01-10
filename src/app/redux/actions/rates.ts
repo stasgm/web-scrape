@@ -1,69 +1,67 @@
-import { createAction, createAsyncAction } from 'typesafe-actions';
-import { ICurrencyRates, ICurrentRates } from '@models';
+import { Dispatch } from 'redux';
+import { createAsyncAction } from 'typesafe-actions';
+import { ICurrency, IBank, IRate } from '@models';
+import { entityAPI } from 'app/api';
 
 export const ratesActions = {
-  addRate: createAction('ADD_RATE', (resolve) => {
-    return (rate: ICurrencyRates) => resolve(rate);
-  }),
-  addRateRequest: createAsyncAction(
-    'REQUEST_ADD_RATE',
-    'REQUEST_ADD_RATE_SUCCEEDED',
-    'REQUEST_ADD_RATE_FAILED'
-  )<void, ICurrencyRates, Error>(),
-  fetchCurrentRates: createAsyncAction(
-    'REQUEST_FETCH_CURRENTRATES',
-    'REQUEST_FETCH_CURRENTRATES_SUCCEEDED',
-    'REQUEST_FETCH_CURRENTRATES_FAILED'
-  )<void, ICurrentRates, Error>(),
-  fetchRates: createAsyncAction('REQUEST_LOAD ', 'REQUEST_LOAD_SUCCEEDED', 'REQUEST_LOAD_FAILED')<
-    void,
-    ICurrencyRates[],
-    Error
-  >()
+  loadCurrentRates: createAsyncAction(
+    'REQUEST_LOAD_CURRENTRATES',
+    'REQUEST_LOAD_CURRENTRATES_SUCCEEDED',
+    'REQUEST_LOAD_CURRENTRATES_FAILED'
+  )<void, IRate[], Error>(),
+  loadRates: createAsyncAction(
+    'REQUEST_LOAD_RATES ',
+    'REQUEST_LOAD_RATES_SUCCEEDED',
+    'REQUEST_LOAD_RATES_FAILED'
+  )<void, IRate[], Error>(),
+  loadBanks: createAsyncAction(
+    'REQUEST_LOAD_BANKS ',
+    'REQUEST_LOAD_BANKS_SUCCEEDED',
+    'REQUEST_LOAD_BANKS_FAILED'
+  )<void, IBank[], Error>(),
+  loadCurrencies: createAsyncAction(
+    'REQUEST_LOAD_CURRENCIES',
+    'REQUEST_LOAD_CURRENCIES_SUCCEEDED',
+    'REQUEST_LOAD_CURRENCIES_FAILED'
+  )<void, ICurrency[], Error>()
 };
 
-// export type TRatesActions = ActionType<typeof ratesActions>;
-/* export const ratesActions = {
-  addRate: createAction('ADD_RATE', resolve => {
-    return (rate: IRateModel) => resolve(rate);
-  }),
-  editArticle: createAction('EDIT_RATE', resolve => {
-    return (article: IRate) => resolve(article);
-  }),
-  deleteArticle: createAction('DELETE_RATE', resolve => {
-    return (article: IArticle) => resolve(article);
-  }),
-  deleteArticles: createAction('DELETE_RATES', resolve => {
-    return () => resolve();
-  }),
-  loadArticles: createAsyncAction('REQUEST_LOAD_ARTICLES', 'REQUEST_LOAD_SUCCEEDED', 'REQUEST_LOAD_FAILED')<
-    void,
-    ICurrencyRate,
-    Error
-  >(),
-  saveArticles: createAsyncAction('REQUEST_SAVE_ARTICLES', 'REQUEST_SAVE_SUCCEEDED', 'REQUEST_SAVE_FAILED')<
-    void,
-    void,
-    Error
-  >(),
-  addDBArticle: createAsyncAction('REQUEST_ADD_ARTICLE', 'REQUEST_ADD_SUCCEEDED', 'REQUEST_ADD_FAILED')<
-    void,
-    IArticle,
-    Error
-  >(),
-  updateDBArticle: createAsyncAction('REQUEST_UPDATE_ARTICLE', 'REQUEST_UPDATE_SUCCEEDED', 'REQUEST_UPDATE_FAILED')<
-    void,
-    IArticle,
-    Error
-  >(),
-  deleteDBArticle: createAsyncAction('REQUEST_DELETE_ARTICLE', 'REQUEST_DELETE_SUCCEEDED', 'REQUEST_DELETE_FAILED')<
-    void,
-    IArticle,
-    Error
-  >()
+// Асинхронные запросы
+
+export const fetchBanks = () => {
+  return async (dispatch: Dispatch) => {
+    dispatch(ratesActions.loadBanks.request());
+    try {
+      const res = await entityAPI.fetchBanks();
+      dispatch(ratesActions.loadBanks.success(res));
+    } catch (err) {
+      dispatch(ratesActions.loadBanks.failure(err));
+    }
+  };
 };
 
-export type TArticlesActions = ActionType<typeof articlesActions>;
+export const fetchCurrencies = () => {
+  return async (dispatch: Dispatch) => {
+    dispatch(ratesActions.loadCurrencies.request());
+    try {
+      const res = await entityAPI.fetchCurrencies();
+      console.log(res);
 
+      dispatch(ratesActions.loadCurrencies.success(res));
+    } catch (err) {
+      dispatch(ratesActions.loadCurrencies.failure(err));
+    }
+  };
+};
 
- */
+export const fetchRates = () => {
+  return async (dispatch: Dispatch) => {
+    dispatch(ratesActions.loadRates.request());
+    try {
+      const res = await entityAPI.fetchRates(new Date());
+      dispatch(ratesActions.loadRates.success(res));
+    } catch (err) {
+      dispatch(ratesActions.loadRates.failure(err));
+    }
+  };
+};

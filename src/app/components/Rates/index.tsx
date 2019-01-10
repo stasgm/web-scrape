@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Table, Button } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
-
-import { ICurrencyRates } from '@models';
 import { RatesProps } from 'app/containers/';
+import { IRate } from 'app/models';
 /* interface IProps {
   data: ICurrencyRates[];
   isLoading: boolean;
@@ -46,7 +45,7 @@ interface ITableTitle {
   RUB: number;
 }
 
-const getData = (data: ICurrencyRates[]): ITableTitle[] => {
+const getData = (data: IRate[]): ITableTitle[] => {
   return [];
   /*   return data
     .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
@@ -61,7 +60,7 @@ const getData = (data: ICurrencyRates[]): ITableTitle[] => {
     }); */
 };
 
-const RateList = (props: { data: ICurrencyRates[]; isLoading: boolean }) => {
+const RateList = (props: { data: IRate[]; isLoading: boolean }) => {
   const tableData = getData(props.data);
 
   const columns: Array<ColumnProps<ITableTitle>> = [

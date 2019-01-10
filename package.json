@@ -10,7 +10,7 @@
     "deploy": "gh-pages -d build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --config configs/webpack.config --mode development --hot --progress --color --port 3000 --open",
-    "build": "webpack -p --progress --colors",
+    "build": "webpack -p --mode=production --progress --colors",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "tslint:check": "tslint-config-prettier-check ./tslint.json",
     "tslint:cli": "tslint --project tsconfig.json",

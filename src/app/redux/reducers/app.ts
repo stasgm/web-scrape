@@ -17,13 +17,13 @@ export const profileReducer: Reducer<ProfileState, ProfilesAction> = (
   action
 ): ProfileState => {
   switch (action.type) {
-    case getType(profile.profileActions.fetchProfile.request): {
+    case getType(profile.profileActions.loadProfile.request): {
       return state;
     }
-    case getType(profile.profileActions.fetchProfile.success): {
+    case getType(profile.profileActions.loadProfile.success): {
       return action.payload;
     }
-    case getType(profile.profileActions.fetchProfile.failure): {
+    case getType(profile.profileActions.loadProfile.failure): {
       return state;
     }
     default:

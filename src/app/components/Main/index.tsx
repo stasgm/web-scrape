@@ -5,7 +5,7 @@ import { ColumnProps } from 'antd/lib/table';
 import { MainProps } from 'app/containers';
 
 import './style.scss';
-import { ICurrencyRate } from 'app/models';
+import { IRate } from 'app/models';
 
 interface ITableTitle {
   key?: string;
@@ -16,17 +16,15 @@ interface ITableTitle {
 }
 export class Main extends React.PureComponent<MainProps, {}> {
   public componentDidMount() {
-    // console.log('frst:', this.props.currentRates.currencies ? '1' : '2');
-
     if (
-      Object.keys(this.props.currentRates.currencies).length === 0 &&
-      this.props.currentRates.currencies.constructor === Object
+      Object.keys(this.props.currentRates).length === 0 &&
+      this.props.currentRates.constructor === Object
     ) {
       this.props.onFetchData();
     }
   }
 
-  private getData = (data: ICurrencyRate): ITableTitle[] =>
+  private getData = (data: IRate[]): ITableTitle[] =>
     Object.keys(data).map((i, idx) => ({
       key: idx.toString(),
       name: i,
@@ -36,7 +34,7 @@ export class Main extends React.PureComponent<MainProps, {}> {
     }));
 
   public render() {
-    const tableData = this.getData(this.props.currentRates.currencies);
+    const tableData = this.getData(this.props.currentRates);
 
     const columns: Array<ColumnProps<ITableTitle>> = [
       { title: 'Наименовние', dataIndex: 'name', key: 'name' },
@@ -47,9 +45,7 @@ export class Main extends React.PureComponent<MainProps, {}> {
 
     return (
       <div>
-        <h3 style={{ marginBottom: 16 }}>
-          Выбранные валюты за: {new Date(this.props.currentRates.date).toLocaleString()}
-        </h3>
+        <h3 style={{ marginBottom: 16 }}>Выбранные валюты за: {new Date().toLocaleString()}</h3>
         <Table<ITableTitle> columns={columns} dataSource={tableData} />
       </div>
     );

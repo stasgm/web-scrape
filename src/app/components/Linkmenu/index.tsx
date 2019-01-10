@@ -13,18 +13,23 @@ export const Linkmenu = withRouter((props: any) => {
           Главная
         </Link>
       </Menu.Item>
-      <Menu.Item key={RoutesEnum.Currencies}>
-        <Link to={RoutesEnum.Currencies}>
-          <Icon type="pay-circle" />
-          Валюты
-        </Link>
-      </Menu.Item>
       <Menu.Item key={RoutesEnum.Rates}>
         <Link to={RoutesEnum.Rates}>
           <Icon type="bar-chart" />
           Курсы
         </Link>
       </Menu.Item>
+      <Menu.Item key={RoutesEnum.Banks}>
+        <Link to={RoutesEnum.Banks}>          
+          Банки
+        </Link>
+      </Menu.Item>      
+      <Menu.Item key={RoutesEnum.Currencies}>
+        <Link to={RoutesEnum.Currencies}>
+          <Icon type="pay-circle" />
+          Валюты
+        </Link>
+      </Menu.Item>      
       <Menu.Item key={RoutesEnum.Map}>
         <Link to={RoutesEnum.Map}>
           <i className="fas map-marked-alt" />

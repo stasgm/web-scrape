@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import { Router } from 'react-router';
 
 import { configureStore } from '@redux/store';
-import { App } from 'app';
+import { AppContainer as App } from 'app';
 import { IRootState } from 'app/models';
 
 import 'app/styles/index.scss';
@@ -13,7 +13,8 @@ import 'app/styles/index.scss';
 const initialState: IRootState = {
   currencyRates: {
     rates: [],
-    currentRates: { currencies: {}, date: new Date() },
+    banks: [],
+    currencies: [],
     hasErrored: false,
     isLoading: false
   },

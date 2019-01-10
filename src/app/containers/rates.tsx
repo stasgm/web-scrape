@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { ratesActions } from '@redux/actions';
-import { RateState, IRootState, ICurrencyRates } from '@models';
+import { RateState, IRootState } from '@models';
 import { Rates } from 'app/components';
 import { entityAPI } from 'app/api';
 // import { AddRate } from 'app/components/Rates/AddRate';
@@ -16,7 +16,6 @@ interface IStateProps {
 
 interface IDispatchProps {
   onFetchData: () => void;
-  onAddRate: (data: ICurrencyRates) => void;
 }
 
 export type IProps = IStateProps & IDispatchProps;
@@ -29,8 +28,7 @@ const mapStateToProps = (state: IRootState): IStateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => {
   return {
-    onFetchData: () => dispatch<any>(fetchData()),
-    onAddRate: (data: ICurrencyRates) => dispatch<any>(addRecord(data))
+    onFetchData: () => dispatch<any>(fetchData())
   };
 };
 
@@ -41,17 +39,17 @@ export const RatesContainer = connect<IStateProps, IDispatchProps, {}, IRootStat
 
 const fetchData = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(ratesActions.fetchRates.request());
+    dispatch(ratesActions.loadRates.request());
     try {
-      const res = await entityAPI.fetchRates();
-      dispatch(ratesActions.fetchRates.success(res));
+      const res = await entityAPI.fetchRates(new Date());
+      dispatch(ratesActions.loadRates.success(res));
     } catch (err) {
-      dispatch(ratesActions.fetchRates.failure(err));
+      dispatch(ratesActions.loadRates.failure(err));
     }
   };
 };
 
-const addRecord = (data: ICurrencyRates) => {
+/* const addRecord = (data: ICurrencyRates) => {
   return async (dispatch: Dispatch) => {
     dispatch(ratesActions.addRateRequest.request());
     try {
@@ -62,3 +60,4 @@ const addRecord = (data: ICurrencyRates) => {
     }
   };
 };
+ */

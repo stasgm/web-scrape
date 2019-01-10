@@ -2,15 +2,10 @@ import * as React from 'react';
 import { Select, Button } from 'antd';
 
 import { ICurrency } from '@models';
-import { entityAPI } from 'app/api';
+import { CurrenciesProps } from 'app/containers';
 import Table, { ColumnProps } from 'antd/lib/table';
 
 import './styles.scss';
-
-interface IProps {
-  name?: string;
-  // currencies: ICurrency;
-}
 
 interface IState {
   currencies: ICurrency[];
@@ -28,13 +23,13 @@ const Option = Select.Option;
 
 const getchildren = (currencies: ICurrency[]) => {
   return currencies.map((i: ICurrency) => (
-    <Option key={i.shortName}>
-      {i.shortName} ({i.code.toString()})
+    <Option key={i.Cur_Abbreviation}>
+      {i.Cur_Abbreviation} ({i.Cur_Code.toString()})
     </Option>
   ));
 };
 
-export class Currency extends React.PureComponent<IProps, IState> {
+export class Currencies extends React.PureComponent<CurrenciesProps, IState> {
   public state: Readonly<IState> = {
     currencies: [],
     selectedCurrencies: [],
@@ -42,33 +37,37 @@ export class Currency extends React.PureComponent<IProps, IState> {
     isLoading: false
   };
 
-  public componentDidMount = async () => {
-    try {
-      const currencies = await fetchCurrencies();
-      this.setState({ ...this.state, currencies });
-    } catch (err) {
-      console.log(err);
+  public componentDidMount = () => {
+    console.log(this.props.currencies.constructor);
+    if (
+      Object.keys(this.props.currencies).length === 0 &&
+      this.props.currencies.constructor === Object
+    ) {
+      this.props.fetchData();
     }
   };
 
   public handleChange = (currency: string[]) => {
-    console.log(currency);
+    /*     console.log(currency);
     this.setState({
       ...this.state,
       selectedCurrencies: this.state.currencies.filter((itm) => currency.includes(itm.shortName))
-    });
+    }); */
     return;
   };
 
   public render() {
     const columns: Array<ColumnProps<ITableTitle>> = [
       { title: 'ID', dataIndex: 'key', key: 'key' },
-      { title: 'Наименование', dataIndex: 'name', key: 'name' }
+      { title: 'Наименование', dataIndex: 'name', key: 'name' },
+      { title: 'Код', dataIndex: 'code', key: 'code' }
     ];
 
-    const tableData: ITableTitle[] = this.state.selectedCurrencies.map((i) => {
-      return { key: i.code, name: i.shortName };
-    });
+    const tableData: ITableTitle[] = [];
+    /*     const tableData: ITableTitle[] = this.state.selectedCurrencies.map((i) => {
+      return [];
+      // { key: i.code, name: i.shortName };
+    }); */
 
     return (
       <>
@@ -80,7 +79,7 @@ export class Currency extends React.PureComponent<IProps, IState> {
                 mode="multiple"
                 style={{ width: '100%' }}
                 placeholder="Выбор основных валют"
-                defaultValue={this.state.selectedCurrencies.map((i) => i.shortName)}
+                // defaultValue={this.state.selectedCurrencies.map((i) => i.shortName)}
                 onChange={this.handleChange}
               >
                 {getchildren(this.state.currencies)}
@@ -97,12 +96,7 @@ export class Currency extends React.PureComponent<IProps, IState> {
           <Table<ITableTitle>
             bordered={false}
             columns={columns}
-            /*   expandedRowRender={(rec) =>
-          expandedRowRender(
-            props.data.rates.find((i) => i.date.toLocaleDateString() === rec.date)!.currencies
-          )
-        } */
-            // loading={props.isLoading}
+            // loading={this.props.isLoading}
             dataSource={tableData}
           />
         </div>
@@ -110,14 +104,3 @@ export class Currency extends React.PureComponent<IProps, IState> {
     );
   }
 }
-
-const fetchCurrencies = async () => {
-  try {
-    const res = await entityAPI.fetchCurrencies();
-    return res;
-    // dispatch(ratesActions.fetchRates.success(res));
-  } catch (err) {
-    return [];
-    // dispatch(ratesActions.fetchRates.failure(err));
-  }
-};

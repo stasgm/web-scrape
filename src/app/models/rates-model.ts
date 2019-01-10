@@ -1,34 +1,47 @@
 export interface IRate {
-  rate: number;
+  id: number;
+  currency: string;
+  date: string;
+  bank_id: number;
   ask: number;
   bid: number;
 }
 
-export interface ICurrencyRate {
+/* export interface ICurrencyRate {
   [value: string]: IRate;
-}
+} */
 
 export interface ICurrency {
-  shortName: string;
-  abbr?: string;
-  code: string;
-  name: string;
+  Cur_ID: number;
+  Cur_Code: string;
+  Cur_Abbreviation: string;
+  Cur_Name: string;
+  id: number;
 }
 
-export interface ICurrencyRates {
+export interface IBank {
+  CDBank: string;
+  NrBank: string;
+  NmBankShort: string;
+  id: number;
+}
+
+/* export interface ICurrencyRates {
   id?: string;
   date: Date;
   currencies: ICurrencyRate[];
-}
+} */
 
 export interface IRateModel {
-  rates: ICurrencyRates[];
-  currentRates: ICurrentRates;
+  rates: IRate[];
+  banks: IBank[];
+  currencies: ICurrency[];
+  // currentRates: ICurrentRates;
   isLoading: boolean;
   hasErrored: boolean;
 }
 
-export interface ICurrentRates {
+/* export interface ICurrentRates {
   date: Date;
   currencies: ICurrencyRate;
-}
+} */

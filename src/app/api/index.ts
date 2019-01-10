@@ -1,17 +1,17 @@
 import {
-  addRecord,
-  fetchCurrentRates,
-  fetchRates,
+  fetchBanks,
   fetchCurrencies,
+  fetchRates,
+  fetchCurrentRates,
   fetchProfile,
   updateProfile
 } from './json-server';
 
 export const entityAPI = {
-  addRecord,
-  fetchRates,
+  fetchBanks,
   fetchCurrencies,
-  fetchProfile,
+  fetchRates,
   fetchCurrentRates,
+  fetchProfile,
   updateProfile
 };

@@ -6,8 +6,9 @@ import { Reducer } from 'redux';
 export type RatesAction = ActionType<typeof rates>;
 
 const initialState: RateState = {
+  banks: [],
+  currencies: [],
   rates: [],
-  currentRates: { currencies: {}, date: new Date() },
   hasErrored: false,
   isLoading: false
 };
@@ -17,31 +18,28 @@ export const ratesReducer: Reducer<RateState, RatesAction> = (
   action
 ): RateState => {
   switch (action.type) {
-    case getType(rates.ratesActions.addRate): {
-      return state;
-    }
-    case getType(rates.ratesActions.addRateRequest.request):
-    case getType(rates.ratesActions.fetchCurrentRates.request):
-    case getType(rates.ratesActions.fetchRates.request): {
+    case getType(rates.ratesActions.loadCurrentRates.request):
+    case getType(rates.ratesActions.loadCurrencies.request):
+    case getType(rates.ratesActions.loadRates.request):
+    case getType(rates.ratesActions.loadBanks.request): {
       return { ...state, isLoading: true, hasErrored: false };
     }
-    case getType(rates.ratesActions.fetchRates.success): {
+    case getType(rates.ratesActions.loadBanks.success): {
+      return { ...state, banks: action.payload, isLoading: false, hasErrored: false };
+    }
+    case getType(rates.ratesActions.loadCurrencies.success): {
+      return { ...state, currencies: action.payload, isLoading: false, hasErrored: false };
+    }
+    case getType(rates.ratesActions.loadCurrentRates.success): {
       return { ...state, rates: action.payload, isLoading: false, hasErrored: false };
     }
-    case getType(rates.ratesActions.fetchCurrentRates.success): {
-      return { ...state, currentRates: action.payload, isLoading: false, hasErrored: false };
+    case getType(rates.ratesActions.loadRates.success): {
+      return { ...state, rates: action.payload, isLoading: false, hasErrored: false };
     }
-    case getType(rates.ratesActions.addRateRequest.success): {
-      return {
-        ...state,
-        rates: [...state.rates, action.payload],
-        isLoading: false,
-        hasErrored: false
-      };
-    }
-    case getType(rates.ratesActions.addRateRequest.failure):
-    case getType(rates.ratesActions.fetchCurrentRates.failure):
-    case getType(rates.ratesActions.fetchRates.failure): {
+    case getType(rates.ratesActions.loadCurrencies.failure):
+    case getType(rates.ratesActions.loadBanks.failure):
+    case getType(rates.ratesActions.loadRates.failure):
+    case getType(rates.ratesActions.loadCurrentRates.failure): {
       return { ...state, isLoading: false, hasErrored: true };
     }
     default:

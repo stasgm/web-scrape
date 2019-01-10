@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { ratesActions } from '@redux/actions';
-import { IRootState, ICurrentRates } from '@models';
+import { IRootState, IRate } from '@models';
 import { Main } from 'app/components';
 import { entityAPI } from 'app/api';
 
 export interface IStateProps {
-  currentRates: ICurrentRates;
+  currentRates: IRate[];
 }
 
 export interface IDispatchProps {
@@ -18,7 +18,7 @@ export interface IDispatchProps {
 export type IProps = IStateProps & IDispatchProps;
 
 const mapStateToProps = (state: IRootState): IStateProps => ({
-  currentRates: state.currencyRates.currentRates
+  currentRates: state.currencyRates.rates
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): IDispatchProps => ({
@@ -32,12 +32,12 @@ export const MainContainer = connect<IStateProps, IDispatchProps, {}, IRootState
 
 const fetchCurrentRates = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(ratesActions.fetchCurrentRates.request());
+    dispatch(ratesActions.loadCurrentRates.request());
     try {
-      const res = await entityAPI.fetchCurrentRates();
-      dispatch(ratesActions.fetchCurrentRates.success(res));
+      const res = await entityAPI.fetchRates(new Date());
+      dispatch(ratesActions.loadCurrentRates.success(res));
     } catch (err) {
-      dispatch(ratesActions.fetchCurrentRates.failure(err));
+      dispatch(ratesActions.loadCurrentRates.failure(err));
     }
   };
 };
